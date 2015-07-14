@@ -8,14 +8,14 @@ android {
     def versionPropsFile = file('gradle.properties')
     def Properties versionProps = new Properties()
     versionProps.load(new FileInputStream(versionPropsFile))
-    versionProps['version'].toString()
+    def version = versionProps['version'].toString()
 
     defaultConfig {
         applicationId "android.nectar.mcruncher.com.myapplication"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 1
-        versionName versionProps['version'].toString()
+        versionCode versionCode
+        versionName version
         print(versionProps['version'].toString())
     }
     buildTypes {
@@ -23,14 +23,14 @@ android {
             minifyEnabled false
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
-                    output.outputFile = new File(output.outputFile.parent, "sample-" + defaultConfig.versionName + ".apk")
+                    output.outputFile = new File(output.outputFile.parent, "sample-" + defaultConfig.versionName + "-" + versionCode + ".apk")
                 }
             }
         }
-        debug{
+        debug {
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
-                    output.outputFile = new File(output.outputFile.parent, "sample-" + defaultConfig.versionName + ".apk")
+                    output.outputFile = new File(output.outputFile.parent, "sample-" + defaultConfig.versionName + "-" + versionCode + ".apk")
                 }
             }
         }
